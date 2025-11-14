@@ -560,10 +560,12 @@ class Partition:
 			return None
 
 	def tabbedDescription(self):
-		if self.mountpoint.startswith('/media/net') or self.mountpoint.startswith('/media/autofs'):
-			# Network devices have a user defined name
+		try:
+			if self.mountpoint.startswith('/media/net') or self.mountpoint.startswith('/media/autofs'):
+				return self.description
+			return self.description + '\t' + self.mountpoint
+		except:
 			return self.description
-		return self.description + '\t' + self.mountpoint
 
 	def mounted(self, mounts=None):
 		# THANK YOU PYTHON FOR STRIPPING AWAY f_fsid.
@@ -771,11 +773,14 @@ class HarddiskManager:
 	def HDDList(self):
 		list = []
 		for hd in self.hdd:
-			hdd = hd.model() + " - " + hd.bus()
-			cap = hd.capacity()
-			if cap != "":
-				hdd += " (" + cap + ")"
-			list.append((hdd, hd))
+			try:
+				hdd = hd.model() + " - " + hd.bus()
+				cap = hd.capacity()
+				if cap != "":
+					hdd += " (" + cap + ")"
+				list.append((hdd, hd))
+			except:
+				pass
 		return list
 
 	def getCD(self):

@@ -732,7 +732,10 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 			prefix = _("Goto") + ": "
 			for d, p in locations:
 				if p and p.startswith('/'):
-					userDefinedActions[p] = prefix + d
+					try:
+						userDefinedActions[p] = prefix + d
+					except:
+						pass
 			config.movielist.btn_red = ConfigSelection(default='delete', choices=userDefinedActions)
 			config.movielist.btn_green = ConfigSelection(default='move', choices=userDefinedActions)
 			config.movielist.btn_yellow = ConfigSelection(default='bookmarks', choices=userDefinedActions)
