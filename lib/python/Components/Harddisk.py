@@ -412,7 +412,7 @@ class Harddisk:
 			big_o_options.append("sparse_super")
 		elif size > 2048:
 			# Over 2GB: 32 i-nodes per megabyte
-			task.args += ["-T", "largefile", "-N", str(size * 32)]
+			task.args += ["-T", "largefile", "-N", str(int(size * 32))]
 		task.args += ["-m0", "-O", ",".join(big_o_options), self.partitionPath("1")]
 
 		task = MountTask(job, self)
@@ -794,7 +794,7 @@ class HarddiskManager:
 				devs.remove(dev)
 
 		# return all devices which are not removed due to being a wholedisk when a partition exists
-		return [x for x in parts if not x.device or x.device in devs]
+		return [x for x in parts if (not x.device or x.device in devs) and x.mountpoint]
 
 	def splitDeviceName(self, devname):
 		# this works for: sdaX, hdaX, sr0 (which is in fact dev="sr0", part=""). It doesn't work for other names like mtdblock3, but they are blacklisted anyway.
