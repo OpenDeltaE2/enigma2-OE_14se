@@ -221,8 +221,10 @@ class ChoiceBox(Screen):
 					summarytext += ">"
 					self["summary_selection"].setText(entry[1])
 				else:
-					summarytext += entry[0]
-				summarytext += ' ' + entry[1] + '\n'
+					if entry[0] is not None:
+						summarytext += entry[0]
+				if entry[1] is not None:
+					summarytext += ' ' + entry[1] + '\n'
 			pos += 1
 		self["summary_list"].setText(summarytext)
 
