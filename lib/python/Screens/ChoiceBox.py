@@ -213,20 +213,19 @@ class ChoiceBox(Screen):
 
 	def updateSummary(self, curpos=0):
 		self.displayDescription(curpos)
-		pos = 0
 		summarytext = ""
-		for entry in self.summarylist:
+		for pos, entry in enumerate(self.summarylist):
 			if curpos - 2 < pos < curpos + 5:
 				if pos == curpos:
 					summarytext += ">"
-					self["summary_selection"].setText(entry[1])
+					if entry[1] is not None:
+						self["summary_selection"].text = entry[1]
 				else:
 					if entry[0] is not None:
 						summarytext += entry[0]
 				if entry[1] is not None:
 					summarytext += ' ' + entry[1] + '\n'
-			pos += 1
-		self["summary_list"].setText(summarytext)
+		self["summary_list"].text = summarytext
 
 	def displayDescription(self, curpos=0):
 		if self.list and len(self.list[curpos][0]) > 2 and isinstance(self.list[curpos][0][2], str):
