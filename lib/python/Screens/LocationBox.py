@@ -284,13 +284,14 @@ class LocationBox(Screen, NumericalTextInput, HelpableScreen):
 
 	def removeDir(self):
 		sel = self["filelist"].getSelection()
-		if sel and os.path.exists(sel[0]):
-			self.session.openWithCallback(
-				boundFunction(self.removeDirCallback, sel[0]),
-				MessageBox,
-				_("Do you really want to remove directory %s from the disk?") % (sel[0]),
-				type=MessageBox.TYPE_YESNO
-			)
+		if sel is not None:
+			if os.path.exists(sel[0]):
+				self.session.openWithCallback(
+					boundFunction(self.removeDirCallback, sel[0]),
+					MessageBox,
+					_("Do you really want to remove directory %s from the disk?") % (sel[0]),
+					type=MessageBox.TYPE_YESNO
+				)
 		else:
 			self.session.open(
 				MessageBox,
@@ -468,7 +469,7 @@ class LocationBox(Screen, NumericalTextInput, HelpableScreen):
 			)
 
 	def menuCallback(self, choice):
-		if choice:
+		if choice is not None:
 			choice[1]()
 
 	def usermodeOn(self):
