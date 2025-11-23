@@ -1276,14 +1276,14 @@ RESULT eDVBSatelliteEquipmentControl::clear()
 /* LNB Specific Parameters */
 RESULT eDVBSatelliteEquipmentControl::addLNB()
 {
-	eDVBSatelliteLNBParameters lnb;
+	static eDVBSatelliteLNBParameters lnb;
 	lnb.m_slot_mask = 0;
 	lnb.m_prio = -1; // auto
 	lnb.m_advanced_satposdepends = -1;
 	m_lnbidx++;
 	m_lnbs.push_back(lnb);
-	m_curSat = lnb.m_satellites.end();
-	eSecDebug("[eDVBSatelliteEquipmentControl::addLNB] lnb=%d)", m_lnbidx);
+	m_curSat = (m_lnbs.end() - 1)->m_satellites.end();
+	eSecDebug("[eDVBSatelliteEquipmentControl::addLNB] lnb=%d", m_lnbidx);
 	return 0;
 }
 
