@@ -4,7 +4,21 @@ import os
 import time
 import re
 from Tools.HardwareInfo import HardwareInfo
+from boxbranding import getBoxType
+from subprocess import PIPE, Popen
+boxtype = getBoxType()
 
+def getOpenSSLVersion():
+	try:
+		process = Popen(("/usr/bin/openssl", "version"), stdout=PIPE, stderr=PIPE, universal_newlines=True)
+		stdout, stderr = process.communicate()
+		if process.returncode == 0:
+			data = stdout.strip().split()
+			if len(data) > 1 and data[0] == "OpenSSL":
+				return data[1]
+	except:
+		pass
+	return _("unknown")
 
 def getFlashMemory(folder='/'):
 	try:
@@ -178,7 +192,10 @@ def getDriverInstalledDate():
 		from glob import glob
 		try:
 			with open(glob("/var/lib/opkg/info/*-dvb-modules-*.control")[0], "r") as fp:
-				driver = [x.split("-")[-2:-1][0][-8:] for x in fp if x.startswith("Version:")][0]
+				if boxtype in ("dm800", "dm8000"):
+					driver = [x.split("-")[-2:-1][0][-9:] for x in fp if x.startswith("Version:")][0]
+				else:
+					driver = [x.split("-")[-2:-1][0][-8:] for x in fp if x.startswith("Version:")][0]
 				return "%s-%s-%s" % (driver[:4], driver[4:6], driver[6:])
 		except:
 			try:
