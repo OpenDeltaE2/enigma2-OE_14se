@@ -5,7 +5,20 @@ import time
 import re
 from Tools.HardwareInfo import HardwareInfo
 from boxbranding import getBoxType
+from subprocess import PIPE, Popen
 boxtype = getBoxType()
+
+def getOpenSSLVersion():
+	try:
+		process = Popen(("/usr/bin/openssl", "version"), stdout=PIPE, stderr=PIPE, universal_newlines=True)
+		stdout, stderr = process.communicate()
+		if process.returncode == 0:
+			data = stdout.strip().split()
+			if len(data) > 1 and data[0] == "OpenSSL":
+				return data[1]
+	except:
+		pass
+	return _("unknown")
 
 def getFlashMemory(folder='/'):
 	try:
