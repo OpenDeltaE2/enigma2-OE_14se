@@ -217,16 +217,10 @@ class CommitInfo(Screen):
 
 		self["key_red"] = Button(_("Cancel"))
 
-		# get the branch to display from the Enigma version
-		try:
-			branch = "?sha=" + "-".join(about.getEnigmaVersionString().split("-")[3:])
-		except:
-			branch = ""
-
 		self.project = 0
 		self.projects = [
-			("https://api.github.com/repos/openpli/enigma2/commits" + branch, "Enigma2"),
-			("https://api.github.com/repos/openpli/openpli-oe-core/commits" + branch, "Openpli Oe Core"),
+			("https://api.github.com/repos/jack2015/enigma2-openpli/commits", "Enigma2"),
+			("https://api.github.com/repos/jack2015/openpli-dreambox-oe-core/commits", "Openpli Oe Core"),
 			("https://api.github.com/repos/openpli/enigma2-plugins/commits", "Enigma2 Plugins"),
 			("https://api.github.com/repos/openpli/aio-grab/commits", "Aio Grab"),
 			("https://api.github.com/repos/openpli/enigma2-plugin-extensions-epgimport/commits", "Plugin EPGImport"),
