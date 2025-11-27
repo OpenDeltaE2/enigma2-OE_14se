@@ -3,6 +3,7 @@ from Components.Console import Console
 import os
 import glob
 import tempfile
+import re
 
 
 class tmp:
@@ -78,8 +79,10 @@ def getCurrentImage():
 					return slot
 
 def getCurrentImageMode():
-	with open('/sys/firmware/devicetree/base/chosen/bootargs', 'r') as fp:
-		return bool(SystemInfo["canMultiBoot"]) and SystemInfo["canMode12"] and int(fp.read().replace('\0', '').split('=')[-1])
+	if SystemInfo["canMultiBoot"] and SystemInfo["canMode12"]:
+		with open("/sys/firmware/devicetree/base/chosen/bootargs", "r") as fp:
+			results = re.search(r"\bboxmode=(\d+)\b", fp.read())
+			return results and int(results.group(1))
 
 def deleteImage(slot):
 	tmp.dir = tempfile.mkdtemp(prefix="Multiboot")
