@@ -35,8 +35,11 @@ class About(Screen):
 		cpu = about.getCPUInfoString()
 		AboutText += _("CPU: ") + cpu + "\n"
 		AboutText += _("Image: ") + about.getImageTypeString() + "-" + getImageBuild() + "\n"
+		AboutText += _("OE Version: (5.0.14)") + "\n"
 		AboutText += _("Build date: ") + about.getBuildDateString() + "\n"
 		AboutText += _("Last update: ") + about.getUpdateDateString() + "\n"
+		AboutText += _("Forum: https://areadeltasat.net") + "\n"
+		
 
 		# [WanWizard] Removed until we find a reliable way to determine the installation date
 		# AboutText += _("Installed: ") + about.getFlashDateString() + "\n"
