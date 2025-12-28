@@ -11,6 +11,8 @@ dist_install_DATA = \
 	lcd.ttf \
 	md_khmurabi_10.ttf \
 	nmsbd.ttf \
+    HandelGotD.ttf \
+    error.ttf \
 	LiberationSans-Bold.ttf \
 	LiberationSans-BoldItalic.ttf \
 	LiberationSans-Italic.ttf \
